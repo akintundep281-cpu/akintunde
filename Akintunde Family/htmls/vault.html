@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akintunde Family Vault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --plum: #4b2e83;
+      --rose: #f6d6d6;
+      --beige: #fdf6f0;
+      --text: #2c2c2c;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--beige);
+      color: var(--text);
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, var(--plum), var(--rose));
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+ nav a{
+      color:white;
+      text-decoration:none;
+      padding:8px 12px;
+      font-weight:700;
+      border-radius:999px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.04);
+      transition:transform .18s ease, background .18s;
+      white-space:nowrap;
+    }
+    nav a:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--plum);
+        padding: 10px 0;
+      }
+      nav.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+    main {
+      flex: 1;
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .vault-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+    .vault-section h2 {
+      color: var(--plum);
+      margin-top: 0;
+    }
+    .vault-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .vault-item {
+      background-color: var(--rose);
+      border: 2px solid var(--plum);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .vault-item:hover {
+      transform: scale(1.05);
+      background-color: #fbecec;
+    }
+    .vault-item h3 {
+      margin: 10px 0 5px;
+      color: var(--plum);
+    }
+    .vault-item p {
+      font-size: 14px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: var(--plum);
+      background-color: var(--rose);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Akintunde Family Vault</h1>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+           <div class="nav-wrap">
+         <nav id="navMenu">
+      <a href="../Akintunde Family/index.html">Home</a>
+      <a href="../Akintunde Family/family-tree.html">Family Tree</a>
+      <a href="../Akintunde Family/gallery.html">Gallery</a>
+      <a href="../Akintunde Family/stories.html">Stories</a>
+      <a href="../Akintunde Family/vault.html">Vault</a>
+      <a href="../Akintunde Family/contact.html">Contact</a>
+    </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="vault-section">
+        <h2>Preserving Our Legacy</h2>
+        <p>Welcome to the Akintunde Family Vault — a sacred space where we preserve our most treasured memories, documents, and stories for future generations.</p>
+
+        <div class="vault-grid">
+          <div class="vault-item">
+            <h3>📜 Founding Documents</h3>
+            <p>Scans of original family records, land deeds, and ancestral letters.</p>
+          </div>
+          <div class="vault-item">
+            <h3>🖼️ Heirloom Gallery</h3>
+            <p>Photos of cherished family artifacts passed down through generations.</p>
+          </div>
+          <div class="vault-item">
+            <h3>🎙️ Oral Histories</h3>
+            <p>Audio recordings of elders sharing stories, wisdom, and family traditions.</p>
+          </div>
+          <div class="vault-item">
+            <h3>🧬 Family Tree Records</h3>
+            <p>Genealogy charts, birth records, and lineage documentation.</p>
+          </div>
+          <div class="vault-item">
+            <h3>📝 Journals & Letters</h3>
+            <p>Handwritten notes, diaries, and correspondence from past generations.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 Akintunde Family • Guarding our past, guiding our future
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navMenu');
+      nav.classList.toggle('show');
+    }
+  </script>
+</body>
+</html>

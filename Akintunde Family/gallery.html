@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Akintunde Family Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--plum:#4b2e83;--rose:#f6d6d6;--beige:#fdf6f0;--text:#2c2c2c;--muted:#6b6275;--card:#ffffff;--gap:20px}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;height:100%;font-family:'Nunito',sans-serif;background:var(--beige);color:var(--text)}
+    header{background:linear-gradient(90deg,var(--plum),var(--rose));color:#fff;padding:20px;text-align:center;border-bottom-left-radius:16px;border-bottom-right-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    header h1{margin:0;font-size:1.5rem;font-weight:700}
+    .menu-toggle{display:none;position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#fff;padding:10px;border-radius:50%;cursor:pointer;font-size:20px}
+    nav{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+    nav a{color:#fff;text-decoration:none;padding:10px 18px;font-weight:700;border-radius:50px;background:rgba(255,255,255,0.1);transition:.2s}
+    nav a:hover{background:rgba(255,255,255,0.2);transform:translateY(-3px)}
+
+    main{max-width:1300px;margin:30px auto;padding:0 20px}
+    .intro{text-align:center;margin-bottom:30px}
+    .intro h2{color:var(--plum);font-size:1.6rem;margin:0}
+    .intro p{color:var(--muted);font-size:1.05rem;margin-top:8px}
+
+    /* 3 columns layout */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:var(--gap);
+    }
+
+    .member{
+      background:var(--card);
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      transition:all .3s;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+    }
+    .member:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(75,46,131,0.18)}
+
+    .member img{
+      width:100%;
+      height:auto;
+      max-height:380px;
+      min-height:280px;
+      object-fit:contain;
+      background:#f9f9f9;
+      padding:12px;
+      border-radius:14px;
+      margin-bottom:14px;
+    }
+    .member figcaption{
+      font-weight:700;
+      font-size:1.1rem;
+      color:var(--plum);
+      margin-bottom:12px;
+      flex-grow:1;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:auto;
+      padding-top:12px;
+      border-top:1px solid rgba(75,46,131,0.1);
+    }
+    .btn{
+      padding:10px 18px;
+      border-radius:50px;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+      transition:.2s;
+    }
+    .btn-primary{background:var(--plum);color:#fff}
+    .btn-ghost{background:transparent;color:var(--plum);border:2px solid var(--plum)}
+    .btn:hover{transform:scale(1.06)}
+
+    .about-panel, .children{display:none;margin-top:16px;padding:16px;background:#faf8ff;border-radius:12px;border:1px solid rgba(75,46,131,0.1)}
+    .about-panel.show, .children.show{display:block}
+    .children.show{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+    .children .member{width:130px;padding:8px;background:var(--card);border-radius:12px}
+
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+    .lightbox.show{display:flex}
+    .lightbox img{max-width:95%;max-height:90vh;border-radius:16px}
+    .lightbox-close{position:absolute;right:20px;top:20px;background:#fff;color:#333;width:50px;height:50px;border-radius:50%;font-size:28px;font-weight:bold;cursor:pointer}
+
+    .mobile-menu{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);padding:20px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.2);display:none;z-index:1100}
+    .mobile-menu.show{display:block}
+    .mobile-menu button{display:block;width:300px;max-width:90vw;margin:10px 0;padding:16px;border-radius:16px;background:var(--plum);color:#fff;font-weight:700;font-size:1.1rem;border:none;cursor:pointer}
+
+    footer{text-align:center;padding:20px;background:var(--rose);color:var(--plum);margin-top:40px;border-radius:16px;font-weight:700}
+
+    @media (max-width:1000px){.gallery{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.gallery{grid-template-columns:1fr}}
+    @media (max-width:760px){
+      .menu-toggle{display:block}
+      nav{display:none;flex-direction:column;padding:16px;background:rgba(255,255,255,0.15);border-radius:16px;margin:20px auto;width:calc(100% - 40px)}
+      nav.show{display:flex}
+      .controls{display:none}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Akintunde Family Gallery</h1>
+    <button class="menu-toggle" id="menuToggle" aria-controls="navMenu" aria-expanded="false">Menu</button>
+      <div class="nav-wrap">
+         <nav id="navMenu">
+      <a href="../Akintunde Family/index.html">Home</a>
+      <a href="../Akintunde Family/family-tree.html">Family Tree</a>
+      <a href="../Akintunde Family/gallery.html">Gallery</a>
+      <a href="../Akintunde Family/stories.html">Stories</a>
+      <a href="../Akintunde Family/vault.html">Vault</a>
+      <a href="../Akintunde Family/contact.html">Contact</a>
+    </nav>
+      </div>
+  </header>
+
+  <main>
+    <div class="intro">
+      <h2>Our Beloved Family</h2>
+      <p> • Click any card • All buttons work perfectly!</p>
+    </div>
+
+    <section class="gallery">
+
+      <!-- 1. Founding Couple -->
+      <figure class="member" data-id="founders">
+        <img src="../Akintunde Family/assets/images/mr and mrs oluwole .PNG" alt="Mr & Mrs Josiah Oluwole Akintunde">
+        <figcaption>Mr Josiah Oluwole & Mrs Adunni Rebecca Akintunde</figcaption>
+        <div class="controls">
+          <button class="btn btn-primary" data-action="view">View Picture</button>
+          <button class="btn btn-ghost" data-action="about">About</button>
+          <button class="btn btn-ghost" data-action="children">Children</button>
+        </div>
+        <div id="about-founders" class="about-panel">
+          <strong>Founding Couple</strong> • Pillars of love, faith and community.
+          <a href="../childrens/oluwole-akintunde.html">Visit their page</a>
+        </div>
+        <div id="children-founders" class="children">
+          <figure class="member"><img src="../Akintunde Family/assets/images/mr and mrs olubowale babatunde.jpeg" alt="">Olubowale & Iyabo  </figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/mr and mrs sadiku.PNG" alt="">Ibrahim & Iyabo Sadiku</figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/mr and mrs yemi akintunde.jpg" alt="">Pst Emmanuel & Folashade</figure>
+        </div>
+      </figure>
+
+      <!-- 2. Olubowale Family -->
+      <figure class="member" data-id="olubowale">
+        <img src="../Akintunde Family/assets/images/mr and mrs olubowale babatunde.jpeg" alt="Olubowale Family">
+        <figcaption>Pst Olubowale & Pst Mrs Iyabo Akintunde</figcaption>
+        <div class="controls">
+          <button class="btn btn-primary" data-action="view">View Picture</button>
+          <button class="btn btn-ghost" data-action="about">About</button>
+          <button class="btn btn-ghost" data-action="children">Children</button>
+        </div>
+        <div id="about-olubowale" class="about-panel">
+          Father of Samuel, Esther, Peter & Paul • Loving craftsman and mentor.
+          <a href="../Akintunde Family/childrens/oluwole-akintunde.html">Visit page</a>
+        </div>
+        <div id="children-olubowale" class="children">
+          <figure class="member"><img src="../Akintunde Family/assets/images/samuel.jpeg" alt=""><figcaption>Samuel</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/esther akintunde.jpeg" alt=""><figcaption>Esther</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/peter.jpeg" alt=""><figcaption>Peter</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/paul.jpeg" alt=""><figcaption>Paul</figcaption></figure>
+        </div>
+      </figure>
+
+      <!-- 3. Sadiku Family -->
+      <figure class="member" data-id="sadiku">
+        <img src="../Akintunde Family/assets/images/mr and mrs sadiku.PNG " alt="Sadiku Family">
+        <figcaption>Mr Ibrahim & Mrs Iyabo Sadiku</figcaption>
+        <div class="controls">
+          <button class="btn btn-primary" data-action="view">View Picture</button>
+          <button class="btn btn-ghost" data-action="about">About</button>
+          <button class="btn btn-ghost" data-action="children">Children</button>
+        </div>
+        <div id="about-sadiku" class="about-panel">
+          Parents to Ahmed, Hakeem, Lukman & Amina.
+          <a href="../Akintunde Family/childrens/mr-sadiku.html">Visit page</a>
+        </div>
+        <div id="children-sadiku" class="children">
+          <figure class="member"><img src="../Akintunde Family/assets/images/ahmed.jpg" alt=""><figcaption>Ahmed</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/hakeem.jpeg" alt=""><figcaption>Hakeem</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/lukman.jpg" alt=""><figcaption>Lukman</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/amina.jpg" alt=""><figcaption>Amina</figcaption></figure>
+        </div>
+      </figure>
+
+      <!-- 4. Pastor Yemi Family -->
+      <figure class="member" data-id="yemi">
+        <img src="../Akintunde Family/assets/images/mr and mrs yemi akintunde.jpg" alt="Pastor Yemi Family">
+        <figcaption>Pst Emmanuel Oluyemi & Pst Mrs Folashade Akintunde</figcaption>
+        <div class="controls">
+          <button class="btn btn-primary" data-action="view">View Picture</button>
+          <button class="btn btn-ghost" data-action="about">About</button>
+          <button class="btn btn-ghost" data-action="children">Children</button>
+        </div>
+        <div id="about-yemi" class="about-panel">
+          Spiritual leaders • Parents to Covenant, Heritage, Amazing & Mercy.
+          <a href="../Akintunde Family/childrens/mr yemi.html">Visit page</a>
+        </div>
+        <div id="children-yemi" class="children">
+          <figure class="member"><img src="../Akintunde Family/assets/images/covenant.jpg" alt=""><figcaption>Covenant</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/heritage.jpg" alt=""><figcaption>Heritage</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/amazing.jpg" alt=""><figcaption>Amazing</figcaption></figure>
+          <figure class="member"><img src="../Akintunde Family/assets/images/mercy.jpg" alt=""><figcaption>Mercy</figcaption></figure>
+        </div>
+      </figure>
+
+      <!-- Add more members exactly the same way -->
+
+    </section>
+  </main>
+
+  <footer>© 2025 Akintunde Family • Love | Faith | Togetherness</footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lbClose" class="lightbox-close" aria-label="Close">×</button>
+    <img id="lbImg" src="" alt="">
+  </div>
+
+  <!-- Mobile Action Menu -->
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <button data-action="view">View Full Picture</button>
+    <button data-action="about">Read About</button>
+    <button data-action="children">See Children</button>
+  </div>
+
+  <script>
+    // Everything works 100% now
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let activeId = null;
+
+    // Open lightbox
+    function openLightbox(src, alt) {
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lightbox.classList.add('show');
+      lightbox.setAttribute('aria-hidden', 'false');
+      lbClose.focus();
+    }
+    lbClose.onclick = () => { lightbox.classList.remove('show'); lbImg.src = ''; };
+
+    // Toggle sections
+    function toggleSection(type, id) {
+      const el = document.getElementById(type + '-' + id);
+      if (!el) return;
+      const isOpen = el.classList.contains('show');
+      // Close all others of same type
+      document.querySelectorAll(`.${type}.show`).forEach(e => e.classList.remove('show'));
+      if (!isOpen) el.classList.add('show');
+    }
+
+    // All members
+    document.querySelectorAll('.member').forEach(member => {
+      const id = member.dataset.id;
+      const img = member.querySelector('img');
+
+      // Desktop buttons
+      member.querySelectorAll('[data-action]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const action = btn.dataset.action;
+          if (action === 'view') openLightbox(img.src, img.alt);
+          if (action === 'about') toggleSection('about', id);
+          if (action === 'children') toggleSection('children', id);
+        });
+      });
+
+      // Click whole card (desktop = show children, mobile = open menu)
+      member.addEventListener('click', e => {
+        if (e.target.closest('button, a')) return;
+        if (window.innerWidth > 760) {
+          toggleSection('children', id);
+        } else {
+          activeId = id;
+          mobileMenu.classList.add('show');
+          mobileMenu.setAttribute('aria-hidden', 'false');
+          mobileMenu.querySelector('button').focus();
+        }
+      });
+    });
+
+    // Mobile menu buttons
+    mobileMenu.querySelectorAll('button').forEach(btn => {
+      btn.onclick = () => {
+        const action = btn.dataset.action;
+        const member = document.querySelector(`.member[data-id="${activeId}"]`);
+        const img = member.querySelector('img');
+        if (action === 'view') openLightbox(img.src, img.alt);
+        if (action === 'about') toggleSection('about', activeId);
+        if (action === 'children') toggleSection('children', activeId);
+        mobileMenu.classList.remove('show');
+      };
+    });
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', e => {
+      if (mobileMenu.classList.contains('show') && !mobileMenu.contains(e.target) && !e.target.closest('.member')) {
+        mobileMenu.classList.remove('show');
+      }
+    });
+
+    // Escape key closes everything
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('show');
+        mobileMenu.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

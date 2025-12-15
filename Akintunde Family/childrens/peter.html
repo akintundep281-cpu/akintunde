@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peter Iyanuoluwa Akintunde</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --plum: #4b2e83;
+      --rose: #f6d6d6;
+      --beige: #fdf6f0;
+      --text: #2c2c2c;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--beige);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--plum), var(--rose));
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+     nav a{
+      color:white;
+      text-decoration:none;
+      padding:8px 12px;
+      font-weight:700;
+      border-radius:999px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.04);
+      transition:transform .18s ease, background .18s;
+      white-space:nowrap;
+    }
+
+    nav a:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--plum);
+        padding: 10px 0;
+      }
+      nav.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    main {
+      flex: 1;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .profile {
+      text-align: center;
+    }
+
+    .profile img {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile h2 {
+      color: var(--plum);
+      margin-top: 20px;
+      font-size: 1.8rem;
+    }
+
+    .profile p {
+      font-size: 1rem;
+      line-height: 1.6;
+      padding: 0 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: var(--plum);
+      background-color: var(--rose);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Akintunde Family Legacy</h1>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+           <nav id="navMenu">
+      <a href="../htmls/index.html">Home</a>
+      <a href="../htmls/family-tree.html">Family Tree</a>
+      <a href="../htmls/gallery.html">Gallery</a>
+      <a href="../htmls/stories.html">Stories</a>
+      <a href="../htmls/vault.html">Vault</a>
+      <a href="../htmls/contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="profile">
+      <img src="../assets/images/peter.jpeg" alt="Peter Iyanuoluwa Akintunde" />
+      <h2>Peter Iyanuoluwa Akintunde</h2>
+      <p><strong>Age:</strong> 17</p>
+      <p>
+        Peter is a thoughtful and determined individual who brings energy and insight to the Akintunde family. His commitment to growth and excellence reflects the enduring spirit of his lineage.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Akintunde Family • Celebrating love, legacy, and togetherness
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navMenu');
+      nav.classList.toggle('show');
+    }
+  </script>
+</body>
+</html>

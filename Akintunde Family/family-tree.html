@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akintunde Family Tree</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --plum: #4b2e83;
+      --rose: #f6d6d6;
+      --beige: #fdf6f0;
+      --text: #2c2c2c;
+      --muted: #6b6275;
+      --card: #ffffff;
+      --max-width: 960px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height:100%; margin:0; padding:0; font-family:'Nunito',sans-serif; background:var(--beige); color:var(--text); -webkit-font-smoothing:antialiased; }
+    body { display:flex; flex-direction:column; min-height:100vh; }
+    header { background: linear-gradient(90deg, var(--plum), var(--rose)); color: white; padding: 16px; text-align: center; position: relative; }
+    .back-btn { position: absolute; left: 12px; top: 12px; background: rgba(255,255,255,0.08); color: white; border: none; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-weight:700; }
+    .menu-toggle { display: none; position: absolute; right: 12px; top: 12px; background: rgba(255,255,255,0.06); border: none; font-size: 20px; color: white; padding: 8px; border-radius: 8px; cursor: pointer; }
+    .nav-wrap { margin-top: 8px; display:flex; justify-content:center; }
+    nav { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+    nav a { color:white; text-decoration:none; padding:8px 12px; font-weight:700; border-radius:999px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.04); white-space:nowrap; transition: transform .12s;}
+    nav a:hover { transform: translateY(-3px); background: rgba(255,255,255,0.12); }
+    main { max-width:var(--max-width); margin:20px auto; padding:0 20px; flex:1; width:100%; }
+    .section { background:var(--card); padding:22px; border-radius:12px; box-shadow: 0 8px 24px rgba(16,24,40,0.05); }
+    .section h2 { color:var(--plum); margin-top:0; }
+    .hint { color:var(--muted); margin-bottom:12px; }
+    .tree { display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:8px; }
+    .tree-row { width:100%; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .tree-box { background:var(--rose); border:2px solid var(--plum); border-radius:10px; padding:12px 16px; text-align:center; width:100%; max-width:520px; cursor:pointer; transition: background .12s, transform .08s; }
+    .tree-box:hover, .tree-box:focus { background:#fbecec; transform:translateY(-3px); outline:none; }
+    .tree-box h3 { margin:0; font-size:1rem; color:var(--plum); }
+    .tree-box a { color:var(--plum); text-decoration:none; }
+    .tree-box a:hover { text-decoration:underline; }
+    .children { margin-top:8px; list-style:none; padding-left:0; display:none; gap:10px; flex-direction:column; align-items:center; }
+    .children.visible { display:flex; }
+    .children .tree-box { max-width:420px; cursor:default; }
+    footer { text-align:center; padding:16px; font-size:14px; color:var(--plum); background:var(--rose); margin-top:0; }
+    .action-modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); z-index:1400; padding:18px; }
+    .action-modal.show { display:flex; }
+    .action-card { width:100%; max-width:420px; background:var(--card); border-radius:12px; padding:14px; box-shadow:0 18px 48px rgba(16,24,40,0.18); }
+    .action-title { color:var(--plum); font-weight:700; margin:0 0 6px 0; }
+    .action-desc { color:var(--muted); margin:0 0 12px 0; }
+    .action-list { display:flex; flex-direction:column; gap:8px; }
+    .action-btn { display:block; width:100%; padding:10px; border-radius:10px; border:1px solid rgba(75,46,131,0.12); background:transparent; color:var(--plum); font-weight:700; cursor:pointer; }
+    .action-btn.primary { background:var(--plum); color:#fff; border-color:rgba(0,0,0,0.06); }
+    .action-close { background:transparent; color:var(--muted); border:none; cursor:pointer; margin-top:8px; font-weight:700; }
+    @media (max-width:760px) { .menu-toggle { display:block; } nav { display:none; flex-direction:column; width:calc(100% - 32px); margin:10px auto 0; padding:10px; border-radius:10px; background:rgba(255,255,255,0.04); } nav.show { display:flex; } .children .tree-box { width:100%; max-width:360px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="back-btn" id="backBtn" title="Go back">← Back</button>
+    <h1>Akintunde Family Legacy</h1>
+    <button class="menu-toggle" id="menuToggle" aria-controls="navMenu" aria-expanded="false">☰</button>
+      <div class="nav-wrap">
+         <nav id="navMenu">
+      <a href="../Akintunde Family/index.html">Home</a>
+      <a href="../Akintunde Family/family-tree.html">Family Tree</a>
+      <a href="../Akintunde Family/gallery.html">Gallery</a>
+      <a href="../Akintunde Family/stories.html">Stories</a>
+      <a href="../Akintunde Family/vault.html">Vault</a>
+      <a href="../Akintunde Family/contact.html">Contact</a>
+    </nav>
+      </div>
+  </header>
+
+  <main>
+    <section class="section" aria-labelledby="treeTitle">
+      <h2 id="treeTitle">Akintunde Family Tree</h2>
+      <p class="hint">Tap/click a name then choose: open personal page or view that person's children. Use Back to return.</p>
+
+      <div class="tree" id="treeRoot">
+        <div class="tree-row">
+          <div class="tree-box" tabindex="0" role="button" data-person="hime" data-page="../childrens/oluwole-akintunde.html" data-children="gen1">
+            <h3>Mr Josiah Oluwole &amp; Mrs Adunni Rebecca Akintunde</h3>
+          </div>
+        </div>
+
+       
+          <li>
+            <div class="tree-box" tabindex="0" role="button" data-person="olubowale" data-page="../childrens/olubowale-akintunde.html" data-children="gen1a">
+              <h3>Mr Olubowale Babatunde &amp; Mrs Iyabo Aminat Akintunde</h3>
+            </div>
+            <ul class="children" id="gen1a" aria-hidden="true">
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="samuel" data-page="../childrens/samuel.html" data-children="gen1a1">
+                  <h3>Samuel Oyindamayo Akintunde.</a></h3></div></li>
+
+                                <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="esther" data-page="../childrens/esther.html">
+                  <h3>Esther Oluwatimileyin Akintunde</h3>
+                </div>
+              </li>
+
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="peter" data-page="../childrens/peter.html">
+                  <h3>Peter Iyanuoluwa Akintunde</h3>
+                </div>
+              </li>
+
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="paul" data-page="../childrens/paul.html">
+                  <h3>Paul Olushola Akintunde</h3>
+                </div>
+              </li>
+                </ul>
+                
+              </li>
+
+            
+          </li>
+
+          <li>
+            <div class="tree-box" tabindex="0" role="button" data-person="sadiku" data-page="../childrens/mr-sadiku.html" data-children="gen1b">
+              <h3>Mr Ibrahim Sadiku &amp; Mrs Iyabo Sadiku</h3>
+            </div>
+
+            <ul class="children" id="gen1b" aria-hidden="true">
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="ahmed" data-page="../childrens/ahmed.html">
+                  <h3>Ahmed Babatunde Sadiku</h3>
+                </div>
+              </li>
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="hakeem" data-page="../childrens/hakeem.html">
+                  <h3>Hakeem Damola Sadiku</h3>
+                </div>
+              </li>
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="lukman" data-page="../childrens/lukman.html">
+                  <h3>Lukman Johnson Sadiku</h3>
+                </div>
+              </li>
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="amina" data-page="../childrens/amina.html">
+                  <h3>Amina Aramide Sadiku</h3>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="tree-box" tabindex="0" role="button" data-person="yemi" data-page="../childrens/yemi-akintunde.html" data-children="gen1c">
+              <h3>Mr Yemi Akintunde &amp; Mrs Folashade Akintunde</h3>
+            </div>
+
+            <ul class="children" id="gen1c" aria-hidden="true">
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="covenant" data-page="../childrens/covenant-akintunde.html">
+                  <h3>Covenant Oluwatimilehin Akintunde</h3>
+                </div>
+              </li>
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="heritage" data-page="../childrens/heritage-akintunde.html">
+                  <h3>Heritage Adetayo Akintunde</h3>
+                </div>
+              </li>
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="amazing" data-page="../childrens/amazing-akintunde.html">
+                  <h3>Amazing Adekola Akintunde</h3>
+                </div>
+              </li>
+              <li>
+                <div class="tree-box" tabindex="0" role="button" data-person="mercy" data-page="../childrens/mercy-akintunde.html">
+                  <h3>Mercy Modesayo Akintunde</h3>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="tree-box" tabindex="0" role="button" data-person="raji" data-page="../childrens/raji-family.html" data-children="gen1d">
+              <h3>Mr Raji &amp; Mrs Temitope Raji</h3>
+            </div>
+
+            <ul class="children" id="gen1d" aria-hidden="true">
+              <li><div class="tree-box" tabindex="0" role="button" data-person="esther-raji" data-page="../childrens/esther-raji.html"><h3>Esther Raji</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="joshua-raji" data-page="../childrens/joshua-raji.html"><h3>Joshua Raji</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="emmanuel-raji" data-page="../childrens/emmanuel-raji.html"><h3>Emmanuel Raji</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="david-raji" data-page="../childrens/david-raji.html"><h3>David Raji</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="deborah-raji" data-page="../childrens/deborah-raji.html"><h3>Deborah Raji</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="suprise-raji" data-page="../childrens/suprise-raji.html"><h3>Suprise Raji</h3></div></li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="tree-box" tabindex="0" role="button" data-person="ayo" data-page="../childrens/ayo-akintunde.html" data-children="gen1e">
+              <h3>Mr Daniel Ayoola Akintunde &amp; Mrs Omotorera Akintunde</h3>
+            </div>
+
+            <ul class="children" id="gen1e" aria-hidden="true">
+              <li><div class="tree-box" tabindex="0" role="button" data-person="ololade" data-page="../childrens/ololade-akintunde.html"><h3>Ololade Akintunde</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="korede" data-page="../childrens/korede-akintunde.html"><h3>Korede Akintunde</h3></div></li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="tree-box" tabindex="0" role="button" data-person="idiaghe" data-page="../childrens/shola-gbademu.html" data-children="gen1f">
+              <h3>Mr Emmanue Idiaghe &amp; Mrs Yemisi Idiaghe</h3>
+            </div>
+
+            <ul class="children" id="gen1f" aria-hidden="true">
+              <li><div class="tree-box" tabindex="0" role="button" data-person="emmanuella" data-page="../childrens/emmanuella-gbademu.html"><h3>Emmanuella Idiaghe</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="derrick" data-page="../childrens/david-gbademu.html"><h3>Derrick Idiaghe</h3></div></li>
+              <li><div class="tree-box" tabindex="0" role="button" data-person="ola" data-page="../childrens/ola-gbademu.html"><h3>Ola Idiaghe</h3></div></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 Akintunde Family • Rooted in love, growing through generations</footer>
+
+  <div id="actionModal" class="action-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="action-card" role="document">
+      <div id="actionTitle" class="action-title">Choose action</div>
+      <div id="actionDesc" class="action-desc">What would you like to do?</div>
+      <div class="action-list">
+        <button id="openPageBtn" class="action-btn primary">Open personal page</button>
+        <button id="viewChildrenBtn" class="action-btn">View children</button>
+        <button id="closeActionBtn" class="action-close">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // Back button
+    const backBtn = document.getElementById('backBtn');
+    backBtn.addEventListener('click', () => {
+      if (document.referrer) history.back(); else window.location.href = '../htmls/index.html';
+    });
+
+    // Menu toggle for mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        const shown = navMenu.classList.toggle('show');
+        menuToggle.setAttribute('aria-expanded', shown ? 'true' : 'false');
+      });
+    }
+
+    const actionModal = document.getElementById('actionModal');
+    const actionTitle = document.getElementById('actionTitle');
+    const actionDesc = document.getElementById('actionDesc');
+    const openPageBtn = document.getElementById('openPageBtn');
+    const viewChildrenBtn = document.getElementById('viewChildrenBtn');
+    const closeActionBtn = document.getElementById('closeActionBtn');
+
+    let current = null;
+
+    // Robust resolver to find the correct children UL for any box
+    function resolveChildrenId(box) {
+      if (!box) return null;
+      // 1) explicit data-children attr
+      const declared = box.getAttribute('data-children');
+      if (declared) return declared;
+      // 2) next sibling UL with class 'children'
+      let candidate = box.nextElementSibling;
+      if (candidate && candidate.classList && candidate.classList.contains('children')) return candidate.id || null;
+      // 3) if box sits inside an LI, look for immediate child UL.children in that LI
+      const li = box.closest('li');
+      if (li) {
+        const innerUL = li.querySelector(':scope > ul.children, :scope > .children');
+        if (innerUL) return innerUL.id || null;
+        // sometimes children UL sits after the LI (rare) - check li.nextElementSibling
+        let nextLiSibling = li.nextElementSibling;
+        if (nextLiSibling && nextLiSibling.classList && nextLiSibling.classList.contains('children')) return nextLiSibling.id || null;
+      }
+      // 4) fallback: look for a children UL whose first tree-box text is the same parent name
+      const text = box.textContent.trim();
+      const allChildren = document.querySelectorAll('ul.children');
+      for (const ul of allChildren) {
+        const firstBox = ul.querySelector('.tree-box');
+        if (firstBox && firstBox.textContent.trim() === text) return ul.id || null;
+      }
+      return null;
+    }
+
+    function revealChildren(id, trigger) {
+      if (!id && trigger) id = resolveChildrenId(trigger);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      const isVisible = el.classList.contains('visible');
+      // hide other children lists at same level
+      document.querySelectorAll('.children').forEach(c => {
+        if (c !== el) { c.classList.remove('visible'); c.setAttribute('aria-hidden','true'); }
+      });
+      if (isVisible) {
+        el.classList.remove('visible');
+        el.setAttribute('aria-hidden','true');
+        if (trigger) trigger.removeAttribute('aria-expanded');
+      } else {
+        el.classList.add('visible');
+        el.setAttribute('aria-hidden','false');
+        if (trigger) trigger.setAttribute('aria-expanded','true');
+        if (window.innerWidth <= 760) setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'center' }), 120);
+      }
+    }
+
+    function showActionModal(personName, pageUrl, childrenId, targetEl) {
+      if (!childrenId && targetEl) childrenId = resolveChildrenId(targetEl);
+      current = { personName, pageUrl, childrenId, targetEl };
+      actionTitle.textContent = personName;
+      actionDesc.textContent = "Open personal page or reveal this person's children.";
+      openPageBtn.onclick = () => {
+        if (current && current.pageUrl) window.location.href = current.pageUrl;
+        hideActionModal();
+      };
+      viewChildrenBtn.onclick = () => {
+        if (current) revealChildren(current.childrenId, current.targetEl);
+        hideActionModal();
+      };
+      actionModal.classList.add('show');
+      actionModal.setAttribute('aria-hidden','false');
+      openPageBtn.focus();
+      document.addEventListener('keydown', handleModalKey);
+    }
+
+    function hideActionModal() {
+      actionModal.classList.remove('show');
+      actionModal.setAttribute('aria-hidden','true');
+      current = null;
+      document.removeEventListener('keydown', handleModalKey);
+    }
+
+    function handleModalKey(e) { if (e.key === 'Escape') hideActionModal(); }
+    closeActionBtn.addEventListener('click', hideActionModal);
+    actionModal.addEventListener('click', (e) => { if (e.target === actionModal) hideActionModal(); });
+
+    // Attach handlers to all tree-boxes (parents and nested children)
+    document.querySelectorAll('.tree-box').forEach(box => {
+      box.addEventListener('click', (e) => {
+        // allow links to work normally
+        if (e.target.closest('a')) return;
+        const personName = box.textContent.trim();
+        const pageUrl = box.getAttribute('data-page') || null;
+        const dataChildren = box.getAttribute('data-children') || null;
+        // If no page and no child list found, do nothing
+        const hasChildren = dataChildren || resolveChildrenId(box);
+        if (!pageUrl && !hasChildren) return;
+        showActionModal(personName, pageUrl, dataChildren, box);
+      });
+      box.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); box.click(); }});
+    });
+
+    // click outside to close children/modal
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.tree-box') && !e.target.closest('.children') && !e.target.closest('.action-card')) {
+        document.querySelectorAll('.children.visible').forEach(c => { c.classList.remove('visible'); c.setAttribute('aria-hidden','true'); });
+        document.querySelectorAll('.tree-box').forEach(tb => tb.removeAttribute('aria-expanded'));
+        if (actionModal.classList.contains('show')) hideActionModal();
+      }
+    });
+
+    // Long-press support to open modal (mobile)
+    let pressTimer = null;
+    document.querySelectorAll('.tree-box').forEach(box => {
+      box.addEventListener('touchstart', () => {
+        pressTimer = setTimeout(() => {
+          const personName = box.textContent.trim();
+          const pageUrl = box.getAttribute('data-page') || null;
+          const dataChildren = box.getAttribute('data-children') || null;
+          showActionModal(personName, pageUrl, dataChildren, box);
+        }, 600);
+      }, { passive: true });
+      box.addEventListener('touchend', () => { if (pressTimer) clearTimeout(pressTimer); }, { passive: true });
+    });
+
+    // keyboard escape to close modal
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (actionModal.classList.contains('show')) hideActionModal(); } });
+  })();
+  </script>
+</body>
+</html>

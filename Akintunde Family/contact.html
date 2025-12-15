@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – Akintunde Family Legacy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --plum: #4b2e83;
+      --rose: #f6d6d6;
+      --beige: #fdf6f0;
+      --text: #2c2c2c;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--beige);
+      color: var(--text);
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, var(--plum), var(--rose));
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    } 
+    nav a{
+      color:white;
+      text-decoration:none;
+      padding:8px 12px;
+      font-weight:700;
+      border-radius:999px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.04);
+      transition:transform .18s ease, background .18s;
+      white-space:nowrap;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--plum);
+        padding: 10px 0;
+      }
+      nav.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+    main {
+      flex: 1;
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+    .section h2 {
+      color: var(--plum);
+      margin-top: 0;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    input, textarea {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 0.75rem;
+      background-color: var(--plum);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3a2469;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: var(--plum);
+      background-color: var(--rose);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Akintunde Family Legacy</h1>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      <div class="nav-wrap">
+        <nav id="navMenu" aria-label="Main navigation">
+          <a href="family-tree.html">Family Tree</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="stories.html">Stories</a>
+          <a href="vault.html">Vault</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <h2>Contact Us</h2>
+        <p>We’d love to hear from you. Fill out the form below and we’ll get back to you soon.</p>
+        <form action="https://formspree.io/f/mjkjbjjj" method="POST">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 Akintunde Family • Together in spirit, always in heart
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navMenu');
+      nav.classList.toggle('show');
+    }
+  </script>
+</body>
+</html>
